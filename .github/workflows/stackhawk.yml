@@ -9,10 +9,10 @@ jobs:
       - name: Run StackHawk Scan
         run: |
           docker run --rm \
-            -e HAWK_API_KEY=${{ secrets.HAWK_API_KEY }} \ 
+            -e HAWK_API_KEY=${{ secrets.HAWK_API_KEY }} \
             -v $(pwd):/hawk \
             stackhawk/hawkscan:latest \
             scan \
-            --api-key ${{ secrets.HAWK_API_KEY }} \  
+            --api-key ${{ secrets.HAWK_API_KEY }} \
             --application-id 7d9f8efa-b061-4e2e-9fe3-0ce02e950357 \
             /hawk/stackhawk.yml
