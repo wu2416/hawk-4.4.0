@@ -20,10 +20,14 @@ jobs:
           echo "API key exists (first 4 chars: ${HAWK_API_KEY:0:4})"
 
       - name: Run StackHawk Scan
+        env:
+          HAWK_API_KEY: ${{ secrets.HAWK_API_KEY }}
         run: |
           echo "Running StackHawk scan..."
+          echo "HAWK_API_KEY in runtime (first 4 chars): ${HAWK_API_KEY:0:4}"
+          
           docker run --rm \
-            -e HAWK_API_KEY="${{ secrets.HAWK_API_KEY }}" \
+            -e HAWK_API_KEY="$HAWK_API_KEY" \
             -v "$(pwd):/hawk" \
             stackhawk/hawkscan:latest \
             scan \
