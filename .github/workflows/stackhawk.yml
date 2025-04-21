@@ -20,5 +20,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no develop@149.159.245.201 << 'EOF'
             echo "Running StackHawk scan on local machine..."
             # Run StackHawk scan with the correct configuration
+            cd /home/develop/桌面/product-api/hawk-4.4.0
+            ./hawk scan
             hawk scan 
           EOF
