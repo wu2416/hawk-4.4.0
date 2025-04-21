@@ -17,10 +17,8 @@ jobs:
 
       - name: Run StackHawk Scan on Local Machine
         run: |
-          ssh -o StrictHostKeyChecking=no user@your-local-machine-ip << 'EOF'
+          ssh -o StrictHostKeyChecking=no user@10.0.2.15 << 'EOF'
             echo "Running StackHawk scan on local machine..."
-            # Ensure the StackHawk CLI is installed
-            npm install -g @stackhawk/hawkscan
             # Run StackHawk scan with the correct configuration
-            hawkscan scan --config /path/to/your/stackhawk.yml --api-key "hawk.AaiQ5DnvyXTTNItzOy8i.9UOSoCnj4plBrkQfFzkg"
+            hawk scan 
           EOF
