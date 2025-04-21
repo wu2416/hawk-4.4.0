@@ -1,0 +1,12 @@
+#!/bin/sh
+dir=$(dirname $0)
+hawk_dir=${HOME}/.hawk
+DEFAULT_JVM_OPTS="-Xms50m -Xmx500m -Dlog4j2.configurationFile=log4j2.cli.properties -Dfile.encoding=UTF-8"
+if [ -z "${JAVA_HOME}" ] || [ ! -d ${JAVA_HOME} ]
+then
+  JAVA_PATH=""
+else
+  JAVA_PATH="${JAVA_HOME}/bin/"
+fi
+
+${JAVA_PATH}java $DEFAULT_JVM_OPTS $JAVA_OPTS -jar ${dir}/talon-bootstrap-4.4.0.jar "$@"
