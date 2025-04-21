@@ -8,26 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Validate Secrets
-        env:
-          HAWK_API_KEY: ${{ secrets.HAWK_API_KEY }}
-        run: |
-          echo "Checking API key..."
-          if [ -z "$HAWK_API_KEY" ]; then
-            echo "Error: HAWK_API_KEY is empty"
-            exit 1
-          fi
-          echo "API key exists (first 4 chars: ${HAWK_API_KEY:0:4})"
-
       - name: Run StackHawk Scan
-        env:
-          HAWK_API_KEY: ${{ secrets.HAWK_API_KEY }}
         run: |
           echo "Running StackHawk scan..."
-          echo "HAWK_API_KEY in runtime (first 4 chars): ${HAWK_API_KEY:0:4}"
+          echo "Using hardcoded API key (first 4 chars): hawk"
           
           docker run --rm \
-            -e HAWK_API_KEY="$HAWK_API_KEY" \
+            -e HAWK_API_KEY="hawk.AaiQ5DnvyXTTNItzOy8i.9UOSoCnj4plBrkQfFzkg" \
             -v "$(pwd):/hawk" \
             stackhawk/hawkscan:latest \
             scan \
