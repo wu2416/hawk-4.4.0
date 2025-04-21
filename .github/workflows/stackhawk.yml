@@ -5,12 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Run StackHawk Scan
+        env:
+          HAWK_API_KEY: ${{ secrets.HAWK_API_KEY }}
         run: |
           docker pull stackhawk/hawkscan:latest
           docker run --rm \
-            -e HAWK_API_KEY=${{ secrets.HAWK_API_KEY }} \
+            -e HAWK_API_KEY=$HAWK_API_KEY \
             -v $(pwd):/hawk \
             stackhawk/hawkscan:latest scan \
-            --appId 7d9f8efa-b061-4e2e-9fe3-0ce02e950357 \
-            --host http://your-app-url
+            --application-id 7d9f8efa-b061-4e2e-9fe3-0ce02e950357 \
+            /hawk/stackhawk.yml 
