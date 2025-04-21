@@ -22,5 +22,4 @@ jobs:
             # Run StackHawk scan with the correct configuration
             cd /home/develop/桌面/product-api/hawk-4.4.0
             ./hawk scan
-            hawk scan 
           EOF
