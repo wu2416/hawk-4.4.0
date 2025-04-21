@@ -5,19 +5,22 @@ on: [push]
 jobs:
   scan:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Run StackHawk Scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run StackHawk Scan on Local Machine
         run: |
-          echo "Running StackHawk scan..."
-          echo "Using hardcoded API key (first 4 chars): hawk"
-          
-          docker run --rm \
-            -e HAWK_API_KEY="hawk.AaiQ5DnvyXTTNItzOy8i.9UOSoCnj4plBrkQfFzkg" \
-            -v "$(pwd):/hawk" \
-            stackhawk/hawkscan:latest \
-            scan \
-            --application-id 7d9f8efa-b061-4e2e-9fe3-0ce02e950357 \
-            /hawk/stackhawk.yml \
-            --debug
+          ssh -o StrictHostKeyChecking=no user@your-local-machine-ip << 'EOF'
+            echo "Running StackHawk scan on local machine..."
+            # Ensure the StackHawk CLI is installed
+            npm install -g @stackhawk/hawkscan
+            # Run StackHawk scan with the correct configuration
+            hawkscan scan --config /path/to/your/stackhawk.yml --api-key "hawk.AaiQ5DnvyXTTNItzOy8i.9UOSoCnj4plBrkQfFzkg"
+          EOF
