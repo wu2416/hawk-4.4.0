@@ -19,4 +19,5 @@ jobs:
             stackhawk/hawkscan:latest \
             scan \
             --application-id 7d9f8efa-b061-4e2e-9fe3-0ce02e950357 \
-            /hawk/stackhawk.yml
+            /hawk/stackhawk.yml \
+            --debug
