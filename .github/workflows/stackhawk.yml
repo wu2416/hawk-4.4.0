@@ -1,0 +1,25 @@
+name: StackHawk Scan
+
+on: [push]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run StackHawk Scan on Local Machine
+        run: |
+          ssh -o StrictHostKeyChecking=no develop@149.159.245.201 << 'EOF'
+            echo "Running StackHawk scan on local machine..."
+            # Run StackHawk scan with the correct configuration
+            cd /home/develop/桌面/product-api/hawk-4.4.0
+            ./hawk scan
+          EOF
